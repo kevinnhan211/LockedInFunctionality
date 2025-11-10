@@ -6,7 +6,7 @@ struct ContentView: View {
     
     @State private var noteId : Int = 0
     
-    @State private var notes = ["test"]
+    @State private var notes : [String] = []
     
     var body: some View {
         ZStack {
@@ -81,11 +81,30 @@ struct ContentView: View {
                         .frame(width:300, height:250)
                         .offset(y:-250)
                         
-                        bottomButton(iconName: "PencilIcon", rotation: 35) {
-                            currentlyInNote = true
-                            notes.append("Untitled Note")
-                            noteId = notes.count-1
+                        ZStack{
+                            Rectangle()
+                                .frame(width: .infinity, height: 100)
+                                .foregroundStyle(.black).opacity(0.2)
+                            Button(action: {
+                                currentlyInNote = true
+                                notes.append("Untitled Note \(notes.count+1)")
+                                noteId = notes.count-1
+                            }) {
+                                ZStack {
+                                    Circle()
+                                        .frame(width: 80, height: 80)
+                                        .foregroundStyle(.buttonColour)
+                                    
+                                    Image(systemName: "pencil.line")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 40, height: 40)
+                                        .foregroundStyle(.white)
+                                }
+                            }
                         }
+                        .offset(y:35)
+                        
                     } else { // User in note document
                         // Top bar in note document
                         VStack(spacing:20) {
@@ -115,6 +134,9 @@ struct ContentView: View {
                                     .foregroundColor(.white)
                                     .autocorrectionDisabled()
                                     .offset(x:40)
+                                    .frame(width:200)
+                                    
+                                    Spacer()
                                     
                                     // Share button
                                     Button(action:{
@@ -144,12 +166,55 @@ struct ContentView: View {
                             
                         }
                         .ignoresSafeArea()
-                        .offset(y:-300)
                         
-                        Spacer()
+                        Rectangle()
+                            .frame(width:.infinity,height:600)
+                            .foregroundStyle(.white)
+                            .offset(y:-15)
                         
-                        bottomButton(iconName: "PencilIcon", rotation: 35) {
+                        ZStack {
+                            Rectangle()
+                                .frame(width: .infinity, height: 100)
+                                .foregroundStyle(.black).opacity(0.2)
+                            
+                            HStack (spacing:20){
+                                // Draw
+                                Button(action: {
+                                    
+                                }) {
+                                    ZStack {
+                                        Circle()
+                                            .frame(width: 80, height: 80)
+                                            .foregroundStyle(.buttonColour)
+                                        
+                                        Image(systemName: "paintbrush.pointed")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 40, height: 40)
+                                            .foregroundStyle(.white)
+                                    }
+                                }
+                                
+                                // Record
+                                Button(action: {
+                                    
+                                }) {
+                                    ZStack {
+                                        Circle()
+                                            .frame(width: 80, height: 80)
+                                            .foregroundStyle(.buttonColour)
+                                        
+                                        Image(systemName: "record.circle")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 40, height: 40)
+                                            .foregroundStyle(.white)
+                                    }
+                                }
+                            }
                         }
+                        .offset(y:2)
+                        
                     }
 
                 }
